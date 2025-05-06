@@ -1,0 +1,28 @@
+# Node.js backend
+backend/node_modules/
+backend/.env
+backend/.env.*.local
+backend/logs/
+backend/*.log
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# Vue frontend (Vite-based)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*.local
+frontend/logs/
+frontend/*.log
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# System + IDE
+.DS_Store
+.vscode/
+.idea/
+*.sw?
+*.suo
+*.sln
