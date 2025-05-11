@@ -1,3 +1,4 @@
+// Router route names
 export enum ERouterName {
     ELEMENT = 'element',
     PROJECT = 'project',
@@ -21,27 +22,31 @@ export enum ERouterName {
     PILOT_HOME = 'pilot-home',
     PILOT_MEDIA = 'pilot-media',
     PILOT_LIVESHARE = 'pilot-liveshare',
-    PILOT_BIND = 'pilot-bind'
-}
+    PILOT_BIND = 'pilot-bind',
+  }
 
+// Storage key names
 export enum EStorageKey {
     LANG_CODE = 'DJI_CREATE_VITE_H5_APP:lang_code',
     TEST_TOOLS_POSITION_STORAGE_KEY = 'DJI_CREATE_VITE_H5_APP:test_tools_position',
-    SESSION_ID = 'DJI_CREATE_VITE_H5_APP:sess'
-}
+    SESSION_ID = 'DJI_CREATE_VITE_H5_APP:sess',
+  }
 
+// Device status values
 export enum EStatusValue {
     CONNECTED = 'Connected',
     DISCONNECT = 'Disconnect',
-    LIVING = 'Living'
-}
+    LIVING = 'Living',
+  }
 
+// Stream connection statuses
 export enum ELiveStatusValue {
     DISCONNECT,
     CONNECTED,
-    LIVING
-}
+    LIVING,
+  }
 
+// Component identifiers
 export enum EComponentName {
     Thing = 'thing',
     Liveshare = 'liveshare',
@@ -50,9 +55,10 @@ export enum EComponentName {
     Map = 'map',
     Tsa = 'tsa',
     Media = 'media',
-    Mission = 'mission'
-}
+    Mission = 'mission',
+  }
 
+// Keys used in localStorage
 export enum ELocalStorageKey {
     Username = 'username',
     WorkspaceId = 'workspace_id',
@@ -64,81 +70,82 @@ export enum ELocalStorageKey {
     UserId = 'user_id',
     Device = 'device',
     GatewayOnline = 'gateway_online',
-}
+  }
 
+// Photo types used in media handling
 export enum EPhotoType {
     Original = 0,
     Preview = 1,
-    Unknown = -1
-}
+    Unknown = -1,
+  }
 
+// Download ownership status
 export enum EDownloadOwner {
     Mine = 0,
     Others = 1,
-    Unknown = -1
-}
+    Unknown = -1,
+  }
 
+// User type for access control
 export enum EUserType {
     Web = 1,
     Pilot = 2,
-}
+  }
 
+// Event bus / API message types
 export enum EBizCode {
     GatewayOsd = 'gateway_osd',
     DeviceOsd = 'device_osd',
     DockOsd = 'dock_osd',
+
     MapElementCreate = 'map_element_create',
     MapElementUpdate = 'map_element_update',
     MapElementDelete = 'map_element_delete',
+
     DeviceOnline = 'device_online',
     DeviceOffline = 'device_offline',
     DeviceHms = 'device_hms',
 
-    // 机场任务
-    FlightTaskProgress = 'flighttask_progress', // 机场任务执行进度
-    FlightTaskMediaProgress = 'file_upload_callback', // 机场任务媒体上传进度
-    FlightTaskMediaHighestPriority = 'highest_priority_upload_flighttask_media', // 机场任务媒体优先级上报
+    FlightTaskProgress = 'flighttask_progress',
+    FlightTaskMediaProgress = 'file_upload_callback',
+    FlightTaskMediaHighestPriority = 'highest_priority_upload_flighttask_media',
 
-    // 设备指令
-    DeviceReboot = 'device_reboot', // 机场重启
-    DroneOpen = 'drone_open', // 飞行器开机
-    DroneClose = 'drone_close', // 飞行器关机
-    DeviceFormat = 'device_format', // 机场数据格式化
-    DroneFormat = 'drone_format', // 飞行器数据格式化
-    CoverOpen = 'cover_open', // 打开舱盖
-    CoverClose = 'cover_close', // 关闭舱盖
-    PutterOpen = 'putter_open', // 推杆展开
-    PutterClose = 'putter_close', // 推杆闭合
-    ChargeOpen = 'charge_open', // 打开充电
-    ChargeClose = 'charge_close', // 关闭充电
+    DeviceReboot = 'device_reboot',
+    DroneOpen = 'drone_open',
+    DroneClose = 'drone_close',
+    DeviceFormat = 'device_format',
+    DroneFormat = 'drone_format',
+    CoverOpen = 'cover_open',
+    CoverClose = 'cover_close',
+    PutterOpen = 'putter_open',
+    PutterClose = 'putter_close',
+    ChargeOpen = 'charge_open',
+    ChargeClose = 'charge_close',
 
-    // 设备升级
-    DeviceUpgrade = 'ota_progress', // 设备升级
+    DeviceUpgrade = 'ota_progress',
+    DeviceLogUploadProgress = 'fileupload_progress',
 
-    // 设备日志
-    DeviceLogUploadProgress = 'fileupload_progress', // 设备日志上传
+    ControlSourceChange = 'control_source_change',
+    FlyToPointProgress = 'fly_to_point_progress',
+    TakeoffToPointProgress = 'takeoff_to_point_progress',
+    JoystickInvalidNotify = 'joystick_invalid_notify',
+    DrcStatusNotify = 'drc_status_notify',
 
-    // 飞行指令消息
-    ControlSourceChange = 'control_source_change', // 控制权更新
-    FlyToPointProgress = 'fly_to_point_progress', // 飞向目标点
-    TakeoffToPointProgress = 'takeoff_to_point_progress', // 一键起飞
-    JoystickInvalidNotify = 'joystick_invalid_notify', // 设备端退出drc模式
-    DrcStatusNotify = 'drc_status_notify', // 飞行控制模式状态
-
-    // custom flight area
     FlightAreasSyncProgress = 'flight_areas_sync_progress',
     FlightAreasDroneLocation = 'flight_areas_drone_location',
     FlightAreasUpdate = 'flight_areas_update',
-}
+  }
 
+// Device type mapping
 export enum EDeviceTypeName {
     Aircraft = 0,
     Gateway = 2,
     Dock = 3,
-}
+  }
 
+// Hardware message severity levels
 export enum EHmsLevel {
     NOTICE,
     CAUTION,
     WARN,
-}
+  }

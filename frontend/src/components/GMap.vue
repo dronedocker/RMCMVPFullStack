@@ -362,7 +362,7 @@
                 <a-tooltip title="Altitude above sea level">
                   <span>ASL</span>
                   <span class="ml10">{{ !deviceInfo.device || deviceInfo.device.height === str ? str : deviceInfo.device?.height.toFixed(2) + ' m'}}</span>
-                </a-tooltip>
+                </a-tooltip>script lang="ts">
               </a-col>
               <a-col span="6">
                 <a-tooltip title="Altitude above takeoff level">
@@ -428,6 +428,10 @@
 </template>
 
 <script lang="ts">
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import MapboxDraw from '@mapbox/mapbox-gl-draw'
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { computed, defineComponent, onMounted, reactive, ref, watch } from 'vue'
 import {
   generateLineContent,
@@ -500,13 +504,12 @@ export default defineComponent({
   name: 'GMap',
   props: {},
   setup () {
-    const useMouseToolHook = useMouseTool()
-    const useGMapManageHook = useGMapManage()
     const deviceTsaUpdateHook = deviceTsaUpdate()
     const root = getRoot()
 
     const mouseMode = ref(false)
     const store = useMyStore()
+    const useMouseToolHook = useMouseTool() // useMouseToolHook
     const state = reactive({
       currentType: '',
       coverIndex: 0,
@@ -687,7 +690,7 @@ export default defineComponent({
       }
     )
 
-    function draw (type: MapDoodleType, bool: boolean, flightAreaType?: EFlightAreaType) {
+    function startDrawing (type: MapDoodleType, bool: boolean, flightAreaType?: EFlightAreaType) {
       state.currentType = type
       mouseMode.value = bool
       state.isFlightArea = !!flightAreaType
@@ -704,9 +707,23 @@ export default defineComponent({
     // 连接或断开drc
     useConnectMqtt()
 
+    let map: mapboxgl.Map
+    let drawinstance: MapboxDraw
+
     onMounted(() => {
-      const app = getApp()
-      useGMapManageHook.globalPropertiesConfig(app)
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY // <-- Insert real token
+
+      map = new mapboxgl.Map({
+        container: 'g-container',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-77.0369, 38.9072], // optional: set dynamically
+        zoom: 13,
+      })
+
+      draw = new MapboxDraw({
+        displayControlsDefault: false
+      })
+      map.addControl(draw, 'top-right')
     })
 
     const { getDrawFlightAreaCallback, onFlightAreaDroneLocationWs } = useFlightArea()

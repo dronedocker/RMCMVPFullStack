@@ -1,3 +1,4 @@
+import 'mapbox-gl/dist/mapbox-gl.css'
 import App from './App.vue'
 import router from './router'
 import { antComponents } from './antd'

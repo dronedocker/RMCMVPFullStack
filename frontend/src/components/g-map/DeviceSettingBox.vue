@@ -225,7 +225,7 @@ const {
       align-items: center;
       justify-content: space-between;
       border: 1px solid #666;
-      margin: 4px 0;
+       rgin: 4px 0;
       padding: 0 8px;
 
       .control-setting-item-left{
