@@ -1,21 +1,19 @@
 <template>
-  <div
-    class="login flex-column flex-justify-center flex-align-center m0 b0">
-    <a-image
-      style="width: 17vw; height: 10vw; margin-bottom: 50px"
-      :src="djiLogo"
-    />
-    <p class="fz35 pb50" style="color: #2d8cf0">Cloud API Demo</p>
+  <div class="login">
+    <div class="logo-wrapper">
+      <a-image class="logo-img" :src="djiLogo" :preview="false" />
+    </div>
+    <p class="logo-text">ReadyMonitor Cloud MVP</p>
     <a-form
       layout="inline"
       :model="formState"
-      class="flex-row flex-justify-center flex-align-center"
+      class="login-form"
     >
       <a-form-item>
         <a-input v-model:value="formState.username" placeholder="Username">
-          <template #prefix
-            ><UserOutlined style="color: rgba(0, 0, 0, 0.25)"
-          /></template>
+          <template #prefix>
+            <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+          </template>
         </a-input>
       </a-form-item>
       <a-form-item>
@@ -24,14 +22,13 @@
           type="password"
           placeholder="Password"
         >
-          <template #prefix
-            ><LockOutlined style="color: rgba(0, 0, 0, 0.25)"
-          /></template>
+          <template #prefix>
+            <LockOutlined style="color: rgba(0, 0, 0, 0.25)" />
+          </template>
         </a-input>
       </a-form-item>
       <a-form-item>
         <a-button
-          class="m0"
           type="primary"
           html-type="submit"
           :disabled="loginBtnDisabled"
@@ -42,51 +39,92 @@
       </a-form-item>
     </a-form>
   </div>
-
 </template>
 
 <script lang="ts" setup>
 import djiLogo from '/@/assets/icons/dji_logo.png'
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-import { reactive, computed, UnwrapRef } from 'vue'
+import { reactive, computed } from 'vue'
 import { login, LoginBody } from '/@/api/manage'
-import { getRoot } from '/@/root'
-import { ELocalStorageKey, ERouterName, EUserType } from '/@/types'
-import router from '/@/router'
+import { useRouter } from 'vue-router'
+import { ERouterName, ELocalStorageKey } from '/@/types/index'
 
-const root = getRoot()
-
-const formState: UnwrapRef<LoginBody> = reactive({
-  username: 'adminPC',
-  password: 'adminPC',
-  flag: EUserType.Web,
+const formState = reactive<LoginBody>({
+  username: '',
+  password: '',
+  flag: true
 })
 
 const loginBtnDisabled = computed(() => {
   return !formState.username || !formState.password
 })
 
-const onSubmit = async (e: any) => {
-  const result = await login(formState)
-  if (result.code === 0) {
-    localStorage.setItem(ELocalStorageKey.Token, result.data.access_token)
-    localStorage.setItem(ELocalStorageKey.WorkspaceId, result.data.workspace_id)
-    localStorage.setItem(ELocalStorageKey.Username, result.data.username)
-    localStorage.setItem(ELocalStorageKey.UserId, result.data.user_id)
-    localStorage.setItem(ELocalStorageKey.Flag, EUserType.Web.toString())
-    root.$router.push(ERouterName.MEMBERS)
-  } else {
-    message.error(result.message)
+const router = useRouter()
+
+const onSubmit = async () => {
+  try {
+    const res = await login(formState)
+    console.log('Login response:', res)
+
+    if (res?.code === 0) {
+      message.success('Login successful')
+
+      if (res.data?.token) {
+        localStorage.setItem(ELocalStorageKey.Token, res.data.token)
+        console.log('Token saved:', ELocalStorageKey.Token)
+      }
+
+      try {
+        await router.push('/home')
+        console.log('Redirected to:', router.currentRoute.value.fullPath)
+      } catch (navError) {
+        console.error('Navigation error:', navError)
+        message.error('Navigation failed')
+      }
+    } else {
+      message.error(res?.message || 'Login failed')
+    }
+  } catch (error) {
+    console.error('Unexpected login error:', error)
+    message.error('Unexpected error during login')
   }
 }
-
 </script>
 
-<style lang="scss" scoped>
-@import '/@/styles/index.scss';
+<style scoped>
 .login {
-  background-color: $dark-highlight;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f5f8fa;
+}
+
+.logo-wrapper {
+  max-width: 160px;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.logo-text {
+  font-size: 24px;
+  color: #2d8cf0;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 </style>
