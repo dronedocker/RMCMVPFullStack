@@ -18,5 +18,13 @@ module.exports = {
     camelcase: 'off',
     'no-redeclare': 'off',
     'vue/no-unused-components': 'off'
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [['/@', './src']],
+        extensions: ['.ts', '.js', '.vue']
+      }
+    }
   }
 }

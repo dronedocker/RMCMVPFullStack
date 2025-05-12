@@ -5,51 +5,51 @@ import {
 export type GeojsonCoordinate = [number, number, number?]
 
 export interface GeojsonLine {
- type: 'Feature'
- properties: {
-   color: string
-   directConnected?: boolean
- }
- geometry: {
-   type: 'LineString'
-   coordinates: GeojsonCoordinate[]
- }
+  type: 'Feature'
+  properties: {
+    color: string
+    directConnected?: boolean
+  }
+  geometry: {
+    type: 'LineString'
+    coordinates: GeojsonCoordinate[]
+  }
 }
 
 export interface GeojsonPolygon {
- type: 'Feature'
- properties: {
-   color: string
- }
- geometry: {
-   type: 'Polygon'
-   coordinates: GeojsonCoordinate[][]
- }
+  type: 'Feature'
+  properties: {
+    color: string
+  }
+  geometry: {
+    type: 'Polygon'
+    coordinates: GeojsonCoordinate[][]
+  }
 }
 
 export interface GeojsonPoint {
- type: 'Feature'
- properties: {
-   color: string
-   clampToGround?: boolean
- }
- geometry: {
-   type: 'Point'
-   coordinates: GeojsonCoordinate
- }
+  type: 'Feature'
+  properties: {
+    color: string
+    clampToGround: boolean // now required
+  }
+  geometry: {
+    type: 'Point'
+    coordinates: GeojsonCoordinate
+  }
 }
 
 export interface GeojsonCircle {
- type: 'Feature'
- properties: {
-   color: string
-   clampToGround?: boolean
- }
- geometry: {
-   type: 'Circle'
-   coordinates: GeojsonCoordinate
-   radius: number
- }
+  type: 'Feature'
+  properties: {
+    color: string
+    clampToGround: boolean // now required
+  }
+  geometry: {
+    type: 'Circle'
+    coordinates: GeojsonCoordinate
+    radius: number
+  }
 }
 
 export type GeojsonFeature = GeojsonLine | GeojsonPolygon | GeojsonPoint | GeojsonCircle
@@ -83,6 +83,10 @@ export function generatePolygon (coordinates: MapGeographicPosition[], propertie
 }
 
 export function generatePoint (position: MapGeographicPosition, properties: GeojsonPoint['properties']): GeojsonFeature {
+  // Enforce clampToGround
+  if (typeof properties.clampToGround !== 'boolean') {
+    throw new Error('clampToGround must be a boolean in GeojsonPoint properties')
+  }
   return {
     type: 'Feature',
     properties,
@@ -94,6 +98,10 @@ export function generatePoint (position: MapGeographicPosition, properties: Geoj
 }
 
 export function generateCircle (position: MapGeographicPosition, properties: GeojsonCircle['properties'], radius: number): GeojsonFeature {
+  // Enforce clampToGround
+  if (typeof properties.clampToGround !== 'boolean') {
+    throw new Error('clampToGround must be a boolean in GeojsonCircle properties')
+  }
   return {
     type: 'Feature',
     properties,

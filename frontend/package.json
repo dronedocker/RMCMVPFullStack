@@ -15,6 +15,7 @@
     "agora-rtc-sdk-ng": "^4.12.1",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.21.1",
+    "coordtransform": "^2.1.2",
     "eventemitter3": "^5.0.0",
     "mapbox-gl": "^3.11.1",
     "mitt": "^3.0.0",
@@ -33,6 +34,8 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/mapbox__mapbox-gl-draw": "^1.4.8",
     "@types/node": "^16.3.2",
     "@types/urlencode": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
@@ -41,7 +44,8 @@
     "@vue/compiler-sfc": "^3.0.5",
     "eslint": "^7.30.0",
     "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.13.0",

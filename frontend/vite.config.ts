@@ -43,18 +43,22 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport =>
           find: '/@',
           replacement: path.resolve(__dirname, './src'),
         },
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, './src'),
+        },
       ],
     },
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "./src/styles/variables";',
+          additionalData: '@import \"./src/styles/variables\";',
         },
       },
     },
     base: '/',
     build: {
-      target: 'es2020', // ← fix for Mapbox GL JS (BigInt)
+      target: 'es2020', // Fix for Mapbox GL JS (BigInt support)
       sourcemap: true,
     },
   })

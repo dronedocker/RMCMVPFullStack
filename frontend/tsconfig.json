@@ -4,6 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
@@ -15,16 +16,17 @@
       "dom"
     ],
     "paths": {
-      "/@/*": [
-        "src/*"
-      ],
+      "@/*": ["src/*"],
+      "/@/*": ["src/*"]
     }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue", 
-    "src/vendors/coordtransform.js"  
+    "src/**/*.vue",
+    "src/vendors/coordtransform.js",
+    "src",
+    "src/types"
   ]
 }

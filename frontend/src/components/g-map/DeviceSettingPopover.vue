@@ -1,25 +1,26 @@
 <template>
-  <a-popover :visible="state.sVisible"
-             trigger="click"
-             v-bind="$attrs"
-             :overlay-class-name="overlayClassName"
-             placement="bottom"
-             @visibleChange=";"
-             v-on="$attrs">
+  <a-popover
+    :visible="visibility.sVisible"
+    trigger="click"
+    v-bind="$attrs"
+    :overlay-class-name="overlayClassName"
+    placement="bottom"
+    v-on="$attrs"
+  >
     <template #content>
-      <div class="title-content">
-      </div>
+      <div class="title-content"></div>
       <slot name="formContent" />
       <div class="uranus-popconfirm-btns">
-        <a-button size="sm"
-           @click="onCancel">
-           {{ cancelText || '取消'}}
+        <a-button size="sm" @click="onCancel">
+          {{ cancelText || '取消' }}
         </a-button>
-        <a-button size="sm"
-          :loading="loading"
+        <a-button
+          size="sm"
+          :loading="props.loading"
           type="primary"
           class="confirm-btn"
-          @click="onConfirm">
+          @click="onConfirm"
+        >
           {{ okText || '确定' }}
         </a-button>
       </div>
@@ -34,71 +35,63 @@
 import { defineProps, defineEmits, reactive, watch, computed } from 'vue'
 
 const props = defineProps<{
-    visible?: boolean,
-    loading?: Boolean,
-    disabled?: Boolean,
-    title?: String,
-    okText?: String,
-    cancelText?: String,
-    width?: Number,
+  visible?: boolean
+  loading?: boolean
+  disabled?: boolean
+  title?: string
+  okText?: string
+  cancelText?: string
+  width?: number
 }>()
 
 const emit = defineEmits(['cancel', 'confirm'])
 
-const state = reactive({
+// ✅ renamed to avoid conflict with other components' "state"
+const visibility = reactive({
   sVisible: false,
-  loading: false,
 })
 
-watch(() => props.visible, (val) => {
-  state.sVisible = val || false
-})
-
-const loading = computed(() => {
-  return props.loading
-})
-const okLabel = computed(() => {
-  return props.loading ? '' : '确定'
-})
+watch(
+  () => props.visible,
+  (val) => {
+    visibility.sVisible = !!val
+  }
+)
 
 const overlayClassName = computed(() => {
-  const classList = ['device-setting-popconfirm']
-  return classList.join(' ')
+  return 'device-setting-popconfirm'
 })
 
-function onConfirm (e: Event) {
-  if (props.disabled) {
-    return
-  }
+function onConfirm(e: Event) {
+  if (props.disabled) return
   emit('confirm', e)
 }
 
-function onCancel (e: Event) {
-  state.sVisible = false
+function onCancel(e: Event) {
+  visibility.sVisible = false
   emit('cancel', e)
 }
-
 </script>
 
 <style lang="scss">
 .device-setting-popconfirm {
   min-width: 300px;
 
-  .uranus-popconfirm-btns{
+  .uranus-popconfirm-btns {
     display: flex;
-    padding: 10px 0px;
+    padding: 10px 0;
     justify-content: flex-end;
 
-    .confirm-btn{
+    .confirm-btn {
       margin-left: 10px;
     }
   }
 
-  .form-content{
+  .form-content {
     display: inline-flex;
     align-items: center;
 
-    .form-label{
+    .form-label {
       padding-right: 10px;
     }
   }
